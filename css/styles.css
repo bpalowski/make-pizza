@@ -1,0 +1,20 @@
+#header{
+  font-size: 50px;
+  text-align: center;
+  letter-spacing: 8px;
+  border-radius: 300px;
+
+}
+
+#Menu{
+  font-style: oblique;
+  text-align: center;
+  margin-left: 350px;
+  margin-right: 350px;
+
+}
+
+#select-size{
+
+  margin-right: 48px;
+}
