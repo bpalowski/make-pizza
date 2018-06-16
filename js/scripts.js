@@ -1,50 +1,21 @@
 
-
-function pizza(size,topping,extraLayer,extraSause,total){
+//Contructors for Pizza and Side
+function Pizza(size,topping,extraLayer,extraSause){
   this.size = size;
   this.topping = topping;
   this.extraLayer= extraLayer;
   this.extraSause= extraSause;
+  this.total = 0;
 }
-//pizza.prototype.total = function(){
-// return selectSize +selectExtrasause+selectExtratopping;
-//}
-
-function sides(drinks, breadsticks,sum){
- this.drinks = drinks;
- this.breadsticks = breadsticks;
+function Sides(drinks, breadsticks){
+  this.drinks = drinks;
+  this.breadsticks = breadsticks;
+  this.total = 0;
 }
-
-//pizza.prototype.total = function(){
-//  return pizzaSize + selectExtratopping + selectExtrasause;
-//}
-
-//sides.prototype.total = function(){
-//return selectDrink + selectBreadstick;
-//}
-
+//Beggining of Document
 $(document).ready(function(){
   $("form#Order-Pizza").submit(function(){
     event.preventDefault();
-    //console.log("Hello");
-    //pizza.prototype.total = function(){
-    //  return selectSize +selectExtrasause+selectExtratopping;
-    //}
-
-    debugger;
-
-    pizza.prototype.total = function(){
-      return pizzaSize + extraTopping + extradipping;
-    }
-
-    sides.prototype.sum = function(){
-      return drinkSelect + breadstickSelect;
-    }
-
-    //var together =function( side, pizza){
-    //  return pizza.prototype.total + sides.prototype.sum;
-    //}
-
     var selectSize = $("select#choose-size").val();
     var selectTopping = $("select#choose-topping").val();
     var selectExtratopping = $("select#Extra-topping").val();
@@ -52,14 +23,8 @@ $(document).ready(function(){
     var selectDrink = $("select#choose-drink").val();
     var selectBreadstick = $("select#choose-breadsticks").val();
 
-    //var total ;
-    //var newSides = new sides(selectDrink, selectBreadstick);
-    var newPizza = new pizza(selectSize,selectTopping, selectExtratopping, selectExtrasause);
-    //var newSides = new sides(selectDrink, selectBreadstick);
-
-    if(selectSize === "Small"){
-      var pizzaSize = 8;
-    }
+    var newPizza = new Pizza(selectSize,selectTopping, selectExtratopping, selectExtrasause);
+    var newSides = new Sides(selectDrink, selectBreadstick);
     if(selectSize === "Small"){
       var pizzaSize = 8;
     }
@@ -69,45 +34,47 @@ $(document).ready(function(){
     if(selectSize === "Large"){
       var pizzaSize = 12;
     }
+    if(selectSize === "Choose"){
+      var pizzaSize = 0;
+    }
     if(selectExtratopping === "Pepperoni" || "Sausage"){
       var extraTopping = 1;
     }
-      if(selectExtratopping === "None"){
+    if(selectExtratopping === "Choose"){
       var extraTopping = 0;
     }
     if(selectExtrasause === "Barbeque" || "Tomatoe"|| "Hot"){
       var extradipping = .25;
     }
-    if(selectExtrasause === "None"){
+    if(selectExtrasause === "Choose"){
       var extradipping = 0;
     }
-    var newSides = new sides(selectDrink, selectBreadstick);
-    if(selectDrink === "Coca"){
+    if(selectDrink === "Coca" || "Pepsi"){
       var drinkSelect = 2;
     }
-    if(selectDrink === "Pepsi"){
-      var drinkSelect = 2;
+    if(selectDrink === "Choose") {
+      var  drinkSelect = 0;
     }
-    if(selectBreadstick === "Rolled"){
+    if(selectBreadstick === "Rolled" || "Crispy"){
       var breadstickSelect = 5;
     }
-    if(selectBreadstick === "Crispy"){
-      var breadstickSelect = 5;
+    if(selectBreadstick === "Choose"){
+      var breadstickSelect = 0;
     }
-
-
-
-
-    // var selectDrink = $("select#choose-drink").val();
-    //var selectBreadstick = $("select#choose-breadsticks").val();
-    // var total;
-    //   var newSides = new sides(selectDrink, selectBreadstick)
-
-    // if(selectSize){
-    //  pizza.prototype.total
-
-    // }
-
+    // created prototypes
+    Pizza.prototype.totalCalc = function(){
+      return this.total = pizzaSize + extraTopping + extradipping;
+      //console.log("THis is the total: ", this.total);
+    }
+    Sides.prototype.totalNumtwo = function(){
+      return this.total = drinkSelect + breadstickSelect;
+    }
+    //function to add both prototypes values
+    function result (){
+      var result = newPizza.totalCalc() + newSides.totalNumtwo();
+      return result;
+    }
+    //Output
     $("ul#results").append("<li><span class='pizza-info'>" + newPizza.size + "</span></li>");
     $(".pizza-info").last().click(function(){
       $("#show-info").show();
@@ -118,14 +85,12 @@ $(document).ready(function(){
       $(".Extra-dipp").text(newPizza.extraSause);
       $(".side-drink").text(newSides.drinks);
       $(".side-breadstick").text(newSides.breadsticks);
-      $(".total").text(newPizza.total);
-      $(".sum").text(newSides.sum);
+      $(".total").text(result());
     })
     $("select#choose-size").val("");
     $("select#choose-topping").val("");
     $("select#Extra-topping").val("");
     $("select#Extra-Sause").val("");
     $(".total").val("");
-    $(".sum").val("");
   })
 })
