@@ -14,7 +14,18 @@
 
 }
 
-#select-size{
-
-  margin-right: 48px;
+.well{
+  background-color: #E0FFFF;
 }
+
+#show-info{
+  display: none;
+}
+.pizza-info{
+  cursor: pointer;
+  color: #red;
+}
+@media only screen and (max-width: 90em) {
+    body {
+        background-color: lightblue;
+    }
